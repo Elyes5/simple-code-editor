@@ -53,21 +53,21 @@ export default {
   },
   methods: {
     selectContent() {
-      let range, selection;
       let textArea = this.$refs.textarea;
-      if (!/Chrome/.test(navigator.userAgent)) {
+      if (document.execCommand("copy") == true) {
+        // older browser support
+        let range, selection;
+        textArea.focus();
+        textArea.select();
         range = document.createRange();
         range.selectNodeContents(textArea);
         selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(range);
         textArea.setSelectionRange(0, textArea.value.length);
-      } else {
-        textArea.select();
-      }
-      if (document.execCommand("copy") == true) {
         document.execCommand("copy");
       } else {
+        // modern browser support (using the clipboard API)
         navigator.clipboard.writeText(textArea.value);
       }
     },
