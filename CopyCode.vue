@@ -53,23 +53,8 @@ export default {
   },
   methods: {
     selectContent() {
-      let textArea = this.$refs.textarea;
-      if (document.execCommand("copy") == true) {
-        // older browser support
-        let range, selection;
-        textArea.focus();
-        textArea.select();
-        range = document.createRange();
-        range.selectNodeContents(textArea);
-        selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
-        textArea.setSelectionRange(0, textArea.value.length);
-        document.execCommand("copy");
-      } else {
-        // modern browser support (using the clipboard API)
-        navigator.clipboard.writeText(textArea.value);
-      }
+      this.$refs.textarea.select();
+      document.execCommand("copy");
     },
     copy(event) {
       this.selectContent();
