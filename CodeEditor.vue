@@ -36,6 +36,7 @@
             @click="
               this.mark = lang[1] === undefined ? lang[0] : lang[1];
               this.languageClass = 'language-' + lang[0];
+              this.$emit('languageUpdate',lang[0]);
             "
           >
             {{ lang[1] === undefined ? lang[0] : lang[1] }}
